@@ -51,13 +51,21 @@ query.bindValue(":cin", res);
 return    query.exec();
 }
 
-bool voyageur::modifier(int cin,int tel)
+bool voyageur::modifier(int cin,int tel,QString nom,QString prenom)
 {
     QSqlQuery query;
     QString res= QString::number(cin);
     QString res2= QString::number(tel);
-    query.prepare("update voyageurs set tel=:tel where cin=:cin");
+    query.prepare("update voyageurs set tel=:tel,nom=:nom,prenom=:prenom where cin=:cin");
     query.bindValue(":cin", res);
     query.bindValue(":tel", res2);
+     query.bindValue(":nom", nom);
+      query.bindValue(":prenom", prenom);
     return    query.exec();
+}
+QSqlQueryModel * voyageur::chercher(int cin)
+{QSqlQueryModel * model= new QSqlQueryModel();
+ QString res= QString::number(cin);
+ model->setQuery("select * from voyageurs where cin='"+res+"'");
+return model;
 }

@@ -47,12 +47,24 @@ query.bindValue(":code", res);
 return    query.exec();
 }
 
-bool billet::modifier(int code,QString date)
+bool billet::modifier(int code,QString date,QString destination)
 {
     QSqlQuery query;
     QString res= QString::number(code);
-    query.prepare("update billet set dates=:date where code=:code");
+    query.prepare("update billet set dates=:date,destination=:destination where code=:code");
     query.bindValue(":code", res);
     query.bindValue(":date", date);
+    query.bindValue(":destination", destination);
+
     return    query.exec();
+}
+
+QSqlQueryModel * billet::trier()
+{QSqlQueryModel * model= new QSqlQueryModel();
+
+model->setQuery("select * from billet order by code");
+model->setHeaderData(0, Qt::Horizontal, QObject::tr("code"));
+model->setHeaderData(1, Qt::Horizontal, QObject::tr("dates "));
+model->setHeaderData(2, Qt::Horizontal, QObject::tr("destination"));
+    return model;
 }

@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 ui->setupUi(this);
 ui->tabbillet->setModel(tmpBillet.afficher());
+ui->tabvoyageur->setModel(tmpvoyageur.afficher());
 
 }
 
@@ -22,17 +23,19 @@ void MainWindow::on_pushButton_4_clicked()
     int code = ui->le_code->text().toInt();
     QString date = ui->la_date->text();
     QString destination= ui->la_des->text();
-      billet e(code,date,destination);
-      bool test=e.modifier(code,date);
+      billet e;
+   // QString destination= ui->la_des->text();
+
+    bool test=e.modifier(code,date,destination);
       if(test)
     {ui->tabbillet->setModel(tmpBillet.afficher());//refresh
-    QMessageBox::information(nullptr, QObject::tr("modifier un Personnel"),
-                      QObject::tr("Personnel modifier.\n"
+    QMessageBox::information(nullptr, QObject::tr("modifier une billet"),
+                      QObject::tr("billet modifier.\n"
                                   "Click Cancel to exit."), QMessageBox::Cancel);
 
     }
       else
-          QMessageBox::critical(nullptr, QObject::tr("Ajouter un Personnel"),
+          QMessageBox::critical(nullptr, QObject::tr("Ajouter une billet"),
                       QObject::tr("Erreur !.\n"
                                   "Click Cancel to exit."), QMessageBox::Cancel);
 }
@@ -46,13 +49,13 @@ void MainWindow::on_ajouterbillet_clicked()
   bool test=e.ajouter();
   if(test)
 {ui->tabbillet->setModel(tmpBillet.afficher());//refresh
-QMessageBox::information(nullptr, QObject::tr("Ajouter un billet"),
+QMessageBox::information(nullptr, QObject::tr("Ajouter une billet"),
                   QObject::tr("billet ajouté.\n"
                               "Click Cancel to exit."), QMessageBox::Cancel);
 
 }
   else
-      QMessageBox::critical(nullptr, QObject::tr("Ajouter un billet"),
+      QMessageBox::critical(nullptr, QObject::tr("Ajouter une billet"),
                   QObject::tr("Erreur !.\n"
                               "Click Cancel to exit."), QMessageBox::Cancel);
 }
@@ -63,13 +66,13 @@ void MainWindow::on_supprimerbillet_clicked()
     bool test=tmpBillet.supprimer(code);
     if(test)
     {ui->tabbillet->setModel(tmpBillet.afficher());//refresh
-        QMessageBox::information(nullptr, QObject::tr("Supprimer un billet"),
+        QMessageBox::information(nullptr, QObject::tr("Supprimer une billet"),
                     QObject::tr("billet supprimé.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
 
     }
     else
-        QMessageBox::critical(nullptr, QObject::tr("Supprimer un billet"),
+        QMessageBox::critical(nullptr, QObject::tr("Supprimer une billet"),
                     QObject::tr("Erreur !.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
 
@@ -87,7 +90,7 @@ void MainWindow::on_ajoutervoyageur_clicked()
   if(test)
 {ui->tabvoyageur->setModel(tmpvoyageur.afficher());//refresh
 QMessageBox::information(nullptr, QObject::tr("Ajouter un voyageur"),
-                  QObject::tr("billet ajouté.\n"
+                  QObject::tr("voyageur ajouté.\n"
                               "Click Cancel to exit."), QMessageBox::Cancel);
 
 }
@@ -100,7 +103,7 @@ QMessageBox::information(nullptr, QObject::tr("Ajouter un voyageur"),
 void MainWindow::on_supprimervoyageur_clicked()
 {
     int code = ui->le_cin_5->text().toInt();
-    bool test=tmpBillet.supprimer(code);
+    bool test=tmpvoyageur.supprimer(code);
     if(test)
     {ui->tabvoyageur->setModel(tmpvoyageur.afficher());//refresh
         QMessageBox::information(nullptr, QObject::tr("Supprimer un voyageur"),
@@ -116,21 +119,37 @@ void MainWindow::on_supprimervoyageur_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    int code = ui->le_code->text().toInt();
-    QString date = ui->la_date->text();
-    QString destination= ui->la_des->text();
-      billet e(code,date,destination);
-      bool test=e.modifier(code,date);
+    int cin = ui->le_cin_3->text().toInt();
+    int tel= ui->le_telephone_2->text().toInt();
+    QString nom = ui->le_nom_2->text();
+    QString prenom= ui->le_prenom_2->text();
+      voyageur e;
+      bool test=e.modifier(cin,tel,nom,prenom);
       if(test)
-    {ui->tabbillet->setModel(tmpBillet.afficher());//refresh
-    QMessageBox::information(nullptr, QObject::tr("modifier un Personnel"),
-                      QObject::tr("Personnel modifier.\n"
+    {ui->tabvoyageur->setModel(tmpvoyageur.afficher());//refresh
+    QMessageBox::information(nullptr, QObject::tr("modifier un voyageur"),
+                      QObject::tr("voyageur modifier.\n"
                                   "Click Cancel to exit."), QMessageBox::Cancel);
 
     }
       else
-          QMessageBox::critical(nullptr, QObject::tr("Ajouter un Personnel"),
+          QMessageBox::critical(nullptr, QObject::tr("Ajouter un voyageur"),
                       QObject::tr("Erreur !.\n"
                                   "Click Cancel to exit."), QMessageBox::Cancel);
 
+}
+
+
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    voyageur v;
+   int cin=ui->lineEdit->text().toInt();
+    ui->tabvoyageur->setModel(v.chercher(cin));
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    billet b;
+    ui->tabbillet->setModel(tmpBillet.trier());
 }

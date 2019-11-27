@@ -14,7 +14,8 @@ public:
     bool ajouter();
     QSqlQueryModel * afficher();
     bool supprimer(int);
-    bool modifier(int,QString);
+   QSqlQueryModel * trier();
+    bool modifier(int,QString,QString);
 };
 
 #endif

@@ -17,8 +17,10 @@ public:
     int getcin(){return cin;}
     bool ajouter();
     QSqlQueryModel * afficher();
+    QSqlQueryModel *chercher(int cin);
+
     bool supprimer(int);
-    bool modifier(int,int);
+    bool modifier(int,int,QString,QString);
     ~voyageur(){}
 
 };
